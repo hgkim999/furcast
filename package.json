@@ -20,6 +20,7 @@
     "libs/*"
   ],
   "dependencies": {
+    "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "@nestjs/config": "^3.3.0",
     "@prisma/client": "^5.22.0",
     "firebase-admin": "^13.0.1",
