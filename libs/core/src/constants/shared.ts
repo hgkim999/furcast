@@ -1,1 +1,0 @@
-export const SHARED_CONSTANTS = "SHARED_CONSTANTS";

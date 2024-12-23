@@ -1,12 +1,15 @@
 "use client";
-import React, { useEffect, useLayoutEffect } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 
-import { setFlushStyles } from "@gluestack-ui/nativewind-utils/flush";
-import { OverlayProvider } from "@gluestack-ui/overlay";
-import { ToastProvider } from "@gluestack-ui/toast";
+import { setFlushStyles } from '@gluestack-ui/nativewind-utils/flush';
+import { OverlayProvider } from '@gluestack-ui/overlay';
+import { ToastProvider } from '@gluestack-ui/toast';
 
-import { config } from "./config";
-import { script } from "./script";
+import { config } from './config';
+import { script } from './script';
 
 const variableStyleTagId = "nativewind-style";
 const createStyle = (styleTagId: string) => {

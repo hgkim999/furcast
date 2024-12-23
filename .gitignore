@@ -40,3 +40,4 @@ yarn-error.log*
 .firebase
 .dataconnect
 dataconnect-debug.log
+firebase-debug.log

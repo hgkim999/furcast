@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["packages/**/*", "apps/**/*"]
+}

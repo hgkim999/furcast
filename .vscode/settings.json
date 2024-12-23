@@ -1,3 +1,5 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "cSpell.words": ["dataconnect", "firebasegen"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
