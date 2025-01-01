@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "server",
+  "name": "@furcast/server",
   "version": "0.0.1",
   "description": "",
   "author": "",
