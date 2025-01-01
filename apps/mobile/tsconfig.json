@@ -1,10 +1,21 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "checkJs": false,
     "strict": true,
+    "jsx": "preserve",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
+  ]
 }

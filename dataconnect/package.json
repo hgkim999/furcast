@@ -1,6 +1,0 @@
-{
-  "name": "dataconnect",
-  "scripts": {
-    "dev": "firebase dataconnect:sdk:generate --watch"
-  }
-}

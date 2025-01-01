@@ -1,6 +1,0 @@
-connectorId: default
-generate:
-  javascriptSdk:
-    outputDir: ../../packages/dataconnect-generated/js/default-connector
-    package: "@furcast/firebase-connector"
-    packageJsonDir: ../../apps/server

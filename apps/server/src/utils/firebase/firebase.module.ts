@@ -1,29 +1,11 @@
-import * as admin from 'firebase-admin';
-
-// firebase.module.ts
 import { Module } from '@nestjs/common';
-import {
-  ConfigModule,
-  ConfigService,
-} from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
+
+import { FirebaseService } from './firebase.service';
 
 @Module({
   imports: [ConfigModule],
-  providers: [
-    {
-      provide: 'FirebaseAdmin',
-      useFactory: async (configService: ConfigService) => {
-        const serviceAccount = require(
-          configService.get('FIREBASE_SERVICE_ACCOUNT_PATH'),
-        );
-        admin.initializeApp({
-          credential: admin.credential.cert(serviceAccount),
-        });
-        return admin;
-      },
-      inject: [ConfigService],
-    },
-  ],
-  exports: ['FirebaseAdmin'],
+  providers: [FirebaseService],
+  exports: [FirebaseService],
 })
 export class FirebaseModule {}

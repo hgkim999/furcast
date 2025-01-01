@@ -1,0 +1,91 @@
+# After updating this file you can restart Caddy by running:
+# docker compose restart caddy
+#
+# To log all requests, add the following block to the appropriate server:
+#
+#   log {
+#     output stderr
+#     format console
+#   }
+{
+	admin off
+	auto_https off
+}
+
+http://furcast.dev, http://*.furcast.dev, http://*.xip.furcast.dev {
+	redir https://{host}{uri}
+}
+
+https://furcast.dev, https://*.furcast.dev {
+	tls {$HOME}/certs/furcast.dev/fullchain.pem {$HOME}/certs/furcast.dev/privkey.pem
+
+
+	# Proxy requests to the correct place
+	reverse_proxy /graphql* {$FURCAST_SERVER_HOST:localhost}:4040
+
+	# Proxy app requests to the Expo development server
+	reverse_proxy /* {
+		to {$FURCAST_APP_HOST:localhost}:8081
+		# Retry requests a number of times to work around 502 errors:
+		lb_retries 10
+	}
+
+	# Set response headers
+	# In production these headers are set by CloudFront: https://github.com/furcast/furcast-infrastructure/blob/main/aws/cloudfront.tf
+	# @security-headers {
+	# 	not path /graphql
+	# }
+	# header @security-headers {
+	# 	Referrer-Policy "strict-origin-when-cross-origin"
+	# 	# Strict-Transport-Security "max-age=31536000"
+	# 	X-Content-Type-Options "nosniff"
+	# 	X-XSS-Protection "0"
+	# 	# Comment this out, and restart Caddy, if you are having a lot of issues with the policy:
+	# 	Content-Security-Policy "default-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.calendly.com https://calendly.com https://static.hsappstatic.net https://*.hubspot.com https://hubspot.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' blob: data: http://localhost:9000 https://cdn.furcast.ai https://furcast-usercontent.s3.us-west-2.amazonaws.com https://*.picsum.photos https://picsum.photos https://logo.clearbit.com https://cdn.brandfetch.io; media-src 'self' blob: http://localhost:9000 https://cdn.furcast.ai https://furcast-usercontent.s3.us-west-2.amazonaws.com; connect-src 'self' data: http://localhost:9000 https://furcast.dev https://cdn.furcast.ai https://s3.us-west-2.amazonaws.com https://*.cloudflarestream.com https://dev-0086bffq0qjppgbd.us.auth0.com https://*.mapbox.com https://www.googletagmanager.com https://www.google-analytics.com https://autocomplete.clearbit.com; worker-src 'self' blob:; frame-src *;"
+	# }
+
+	# https://studio.apollographql.com/sandbox/explorer?endpoint=https://furcast.dev/graphql
+	@apollo-studio-options {
+		path /graphql
+		method OPTIONS
+		header origin https://studio.apollographql.com
+	}
+	header @apollo-studio-options {
+		Access-Control-Allow-Origin https://studio.apollographql.com
+		Access-Control-Allow-Headers content-type,authorization
+	}
+	respond @apollo-studio-options 200
+
+	@apollo-studio-post {
+		path /graphql
+		method POST
+		header origin https://studio.apollographql.com
+	}
+	header @apollo-studio-post {
+		Access-Control-Allow-Origin https://studio.apollographql.com
+	}
+}
+
+https://www.furcast.dev {
+	tls {$HOME}/certs/furcast.dev/fullchain.pem {$HOME}/certs/furcast.dev/privkey.pem
+
+	reverse_proxy * {$FURCAST_SERVER_HOST:localhost}:4000
+}
+
+# View the storybook-static files from "yarn build-storybook" by visiting https://storybook-static.furcast.dev/
+# Do not confuse this with https://storybook.furcast.dev/ which is the published storybook files
+https://storybook-static.furcast.dev {
+	tls {$HOME}/certs/furcast.dev/fullchain.pem {$HOME}/certs/furcast.dev/privkey.pem
+
+	root * /root/furcast/libs/ui/storybook-static
+	file_server
+}
+
+# xip.furcast.dev is set up as a white label domain for https://sslip.io/
+https://*.xip.furcast.dev {
+	tls {$HOME}/certs/furcast.dev/fullchain.pem {$HOME}/certs/furcast.dev/privkey.pem
+
+	reverse_proxy https://furcast.dev {
+		header_up Host furcast.dev
+	}
+}

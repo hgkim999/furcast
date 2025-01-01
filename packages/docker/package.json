@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "name": "docker",
+  "version": "1.0.0",
+  "description": "docker turbo runner",
+  "scripts": {
+    "dev": "docker compose up"
+  },
+  "author": "",
+  "license": "ISC"
+}

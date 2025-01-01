@@ -1,0 +1,18 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Dog {
+  age: Float!
+  breed: String
+  id: ID!
+  name: String!
+}
+
+type Mutation {
+  addDog(age: Float!, breed: String!, name: String!): Dog!
+}
+
+type Query {
+  dog(id: ID!): Dog!
+}

@@ -1,11 +1,15 @@
-import 'react-native-reanimated';
+import '../global.css';
 
-import { useEffect } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
 
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { useColorScheme } from '@/components/useColorScheme';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
@@ -16,10 +20,10 @@ import {
 
 export { ErrorBoundary } from 'expo-router';
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
+// export const unstable_settings = {
+//   // Ensure that reloading on `/modal` keeps a back button present.
+//   initialRouteName: "gluestack",
+// };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -30,6 +34,7 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
+  const [styleLoaded, setStyleLoaded] = useState(false);
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
@@ -41,9 +46,13 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  // useLayoutEffect(() => {
+  //   setStyleLoaded(true);
+  // }, [styleLoaded]);
+
+  // if (!loaded || !styleLoaded) {
+  //   return null;
+  // }
 
   return <RootLayoutNav />;
 }
@@ -52,11 +61,10 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
-    </ThemeProvider>
+    <GluestackUIProvider mode={colorScheme === "dark" ? "dark" : "light"}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Slot />
+      </ThemeProvider>
+    </GluestackUIProvider>
   );
 }

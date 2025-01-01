@@ -1,0 +1,40 @@
+services:
+  caddy:
+    image: caddy
+    ports:
+      - 80:80
+      - 443:443
+      - 6010:6010
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certs:/root/certs:ro
+      - .:/root/furcast:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      FURCAST_SERVER_HOST: '${FURCAST_SERVER_HOST}'
+      FURCAST_APP_HOST: '${FURCAST_APP_HOST}'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+
+  postgres:
+    image: postgres:17
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: furcast
+      POSTGRES_USER: furcast
+      POSTGRES_PASSWORD: furcast
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+
+volumes:
+  postgresdata:
+    driver: local
+  caddy_data:
+  caddy_config:
