@@ -15,4 +15,5 @@ type Mutation {
 
 type Query {
   dog(id: ID!): Dog!
+  weather: String!
 }

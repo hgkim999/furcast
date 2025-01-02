@@ -42,3 +42,8 @@ export const DB_DATABASE = checkVariable(
 
 export const APP_HOST = checkVariable('APP_HOST', process.env.APP_HOST);
 export const APP_ENDPOINT = process.env.APP_ENDPOINT || `https://${APP_HOST}`;
+
+export const OPENWEATHER_API_KEY = checkVariable(
+  'OPENWEATHER_API_KEY',
+  process.env.OPENWEATHER_API_KEY,
+);

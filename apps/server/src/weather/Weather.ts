@@ -1,11 +1,7 @@
-import { IsOptional } from 'class-validator';
-
-import { Entity } from '@mikro-orm/core';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-@Entity()
-export class Dog {
+export class Weather {
   @Field(() => ID)
   id: string;
 
@@ -13,10 +9,8 @@ export class Dog {
   name: string;
 
   @Field(() => String, { nullable: true })
-  @IsOptional()
   breed: string;
 
-  @Field(() => Number, { nullable: false })
-  @IsOptional()
-  age: number;
+  @Field(() => Number, { nullable: true })
+  age: number | null;
 }

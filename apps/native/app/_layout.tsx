@@ -10,6 +10,8 @@ import { StatusBar } from 'expo-status-bar';
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import apolloClient from '@/utils/apolloClient';
+import { ApolloProvider } from '@apollo/client';
 import {
   DarkTheme,
   DefaultTheme,
@@ -36,14 +38,18 @@ export default function RootLayout() {
   }
 
   return (
-    <GluestackUIProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </GluestackUIProvider>
+    <ApolloProvider client={apolloClient}>
+      <GluestackUIProvider mode="system">
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </GluestackUIProvider>
+    </ApolloProvider>
   );
 }

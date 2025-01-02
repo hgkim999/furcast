@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DogModule } from './dogs/dog.module';
 import { FirebaseModule } from './utils/firebase/firebase.module';
+import { WeatherModule } from './weather/weather.module';
 
 @Module({
   imports: [
@@ -23,14 +24,16 @@ import { FirebaseModule } from './utils/firebase/firebase.module';
       },
       autoSchemaFile: join(
         process.cwd(),
-        '../../packages/core/src/graphql/schema.gql',
+        '../../packages/core/graphql/schema.gql',
       ),
+      introspection: true,
       sortSchema: true,
     }),
 
     FirebaseModule,
 
     DogModule,
+    WeatherModule,
   ],
   controllers: [AppController],
   providers: [AppService],

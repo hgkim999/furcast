@@ -5,7 +5,7 @@ import { Dog } from './Dog';
 import { AddDogArgs, DogArgs } from './dog.args';
 import { DogService } from './dog.service';
 
-@Resolver()
+@Resolver(Dog)
 export class DogResolver {
   constructor(@Inject() private readonly dogService: DogService) {}
 

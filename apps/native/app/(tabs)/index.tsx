@@ -1,35 +1,69 @@
-import { Image, Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Image } from '@/components/ui/image';
 import { LinearGradient } from '@/components/ui/linear-gradient';
+import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
+import { WeatherButton } from '@/components/WeatherButton';
+import { graphql } from '@/gql';
+import { gql, useApolloClient, useQuery } from '@apollo/client';
+
+const weatherQuery = graphql(`
+  query mainTab_weather {
+    weather
+  }
+`);
 
 export default function HomeScreen() {
+  const { data, loading } = useQuery(weatherQuery);
+  const apolloClient = useApolloClient();
+
+  const handleClick = async () => {
+    const res = await apolloClient.query({
+      query: gql`
+        query {
+          weather
+        }
+      `,
+    });
+    console.log(res.data.weather);
+
+    console.log(process.env.EXPO_PUBLIC_APOLLO_ENDPOINT);
+  };
+
+  console.log({ data });
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          alt="Furcast Loading"
+          source={require('@/assets/images/backgrounds/loading.png')}
+          className="h-full w-full"
         />
       }
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
+        <WeatherButton />
       </ThemedView>
-      <LinearGradient
-        className="w-full items-center rounded-full py-2"
-        colors={['#8637CF', '#0F55A1']}
-        start={[0, 1]}
-        end={[1, 0]}
+      <Pressable
+        className="w-full cursor-pointer items-center rounded-full py-2"
+        onPress={handleClick}
       >
-        <Text className="font-semibold text-white">Subscribe</Text>
-      </LinearGradient>
+        <LinearGradient
+          colors={['#8637CF', '#0F55A1']}
+          start={[0, 1]}
+          end={[1, 0]}
+        >
+          <Text className="font-semibold text-white">Subscribe</Text>
+        </LinearGradient>
+      </Pressable>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
