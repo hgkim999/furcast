@@ -1,3 +1,5 @@
+> This folder contains certs for local HTTPS development.
+
 ```shell
 sudo certbot certonly --manual --preferred-challenges dns --cert-name furcast.dev -d furcast.dev -d *.furcast.dev -d *.xip.furcast.dev
 ```
