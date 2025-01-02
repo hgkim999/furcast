@@ -47,3 +47,7 @@ export const OPENWEATHER_API_KEY = checkVariable(
   'OPENWEATHER_API_KEY',
   process.env.OPENWEATHER_API_KEY,
 );
+
+export const REDIS_HOST = process.env.REDIS_HOST || 'localhost';
+export const REDIS_PORT = parseInt(process.env.REDIS_PORT || '6379');
+export const REDIS_DB = parseInt(process.env.REDIS_DB || '0');

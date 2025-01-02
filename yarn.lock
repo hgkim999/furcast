@@ -2917,7 +2917,6 @@ __metadata:
     expo-haptics: "npm:~14.0.0"
     expo-linear-gradient: "npm:~14.0.1"
     expo-linking: "npm:~7.0.3"
-    expo-manifests: "npm:^0.15.4"
     expo-router: "npm:~4.0.15"
     expo-splash-screen: "npm:~0.29.18"
     expo-status-bar: "npm:~2.0.0"
@@ -2954,6 +2953,7 @@ __metadata:
   dependencies:
     "@apollo/server": "npm:^4.11.2"
     "@furcast/core": "npm:*"
+    "@liaoliaots/nestjs-redis": "npm:^10.0.0"
     "@mikro-orm/core": "npm:^6.4.2"
     "@mikro-orm/migrations": "npm:^6.4.2"
     "@mikro-orm/nestjs": "npm:^6.0.2"
@@ -2983,6 +2983,7 @@ __metadata:
     firebase-admin: "npm:^13.0.1"
     graphql: "npm:^16.10.0"
     graphql-ws: "npm:^5.16.0"
+    ioredis: "npm:^5.4.2"
     jest: "npm:^29.5.0"
     pino: "npm:^9.6.0"
     prettier: "npm:^3.0.0"
@@ -4237,6 +4238,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ioredis/commands@npm:^1.1.1":
+  version: 1.2.0
+  resolution: "@ioredis/commands@npm:1.2.0"
+  checksum: 10c0/a5d3c29dd84d8a28b7c67a441ac1715cbd7337a7b88649c0f17c345d89aa218578d2b360760017c48149ef8a70f44b051af9ac0921a0622c2b479614c4f65b36
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -4624,6 +4632,19 @@ __metadata:
     react:
       optional: true
   checksum: 10c0/98e1a898dd9f1ed597a7bdc228c29fb6bde0224b396ba7e0ea031ea3e4b7e08be81e8da055a46bf0229e6eafc97537ff3ad9c9ce0a65077ca33841a2ab1fcf60
+  languageName: node
+  linkType: hard
+
+"@liaoliaots/nestjs-redis@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "@liaoliaots/nestjs-redis@npm:10.0.0"
+  dependencies:
+    tslib: "npm:2.7.0"
+  peerDependencies:
+    "@nestjs/common": ^10.0.0
+    "@nestjs/core": ^10.0.0
+    ioredis: ^5.0.0
+  checksum: 10c0/f242948873ddc8ca823c2a2a3c94aa85a6c3af7ed9e57956ee6398a63e4c63f9e80a72c7d16c3db8f2a303e435c36b8772191265d99e099c32a9823602026a74
   languageName: node
   linkType: hard
 
@@ -8837,6 +8858,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cluster-key-slot@npm:^1.1.0":
+  version: 1.1.2
+  resolution: "cluster-key-slot@npm:1.1.2"
+  checksum: 10c0/d7d39ca28a8786e9e801eeb8c770e3c3236a566625d7299a47bb71113fb2298ce1039596acb82590e598c52dbc9b1f088c8f587803e697cb58e1867a95ff94d3
+  languageName: node
+  linkType: hard
+
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -9577,6 +9605,13 @@ __metadata:
   version: 1.2.1
   resolution: "denodeify@npm:1.2.1"
   checksum: 10c0/d7e5a974eae4e837f7c70ecb9bdbafae9fbdda1993a86dead1b0ec1d162ed34a9adb2cfbc0bce30d8ccf7a7294aba660862fdce761a0c6157650a0839630d33a
+  languageName: node
+  linkType: hard
+
+"denque@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "denque@npm:2.1.0"
+  checksum: 10c0/f9ef81aa0af9c6c614a727cb3bd13c5d7db2af1abf9e6352045b86e85873e629690f6222f4edd49d10e4ccf8f078bbeec0794fafaf61b659c0589d0c511ec363
   languageName: node
   linkType: hard
 
@@ -10504,13 +10539,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-json-utils@npm:~0.14.0":
-  version: 0.14.0
-  resolution: "expo-json-utils@npm:0.14.0"
-  checksum: 10c0/d9f6a2ef1897426136fb87cccc1dbe3c9f8938ac8df629bf3467f61b4031ec6b923ef573494640cdf38db27dd7c93b4e0e59c67ba6216d21f5556051c553cab8
-  languageName: node
-  linkType: hard
-
 "expo-keep-awake@npm:~14.0.1":
   version: 14.0.1
   resolution: "expo-keep-awake@npm:14.0.1"
@@ -10542,18 +10570,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/fc1f4e49f8aaf768074aa533891ed11d6cda95c624cfb0962e85127bb1525019cf17ca901c89e4618c48eb8ed0311bb1934d8f6fefca83161ac2b3c8a41c59f9
-  languageName: node
-  linkType: hard
-
-"expo-manifests@npm:^0.15.4":
-  version: 0.15.4
-  resolution: "expo-manifests@npm:0.15.4"
-  dependencies:
-    "@expo/config": "npm:~10.0.4"
-    expo-json-utils: "npm:~0.14.0"
-  peerDependencies:
-    expo: "*"
-  checksum: 10c0/1413fb556ac963d6c80fd00568a20d2726da49cbad74ca9a0ee9d3871f4d60b484b1fd899090364eede02132a5a35b48717b8e3596ba12e01a810b65d8cdba23
   languageName: node
   linkType: hard
 
@@ -12247,6 +12263,23 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.0.0"
   checksum: 10c0/5af133a917c0bcf65e84e7f23e779e7abc1cd49cb7fdc62d00d1de74b0d8c1b5ee74ac7766099fb3be1b05b26dfc67bab76a17030d2fe7ea2eef867434362dfc
+  languageName: node
+  linkType: hard
+
+"ioredis@npm:^5.4.2":
+  version: 5.4.2
+  resolution: "ioredis@npm:5.4.2"
+  dependencies:
+    "@ioredis/commands": "npm:^1.1.1"
+    cluster-key-slot: "npm:^1.1.0"
+    debug: "npm:^4.3.4"
+    denque: "npm:^2.1.0"
+    lodash.defaults: "npm:^4.2.0"
+    lodash.isarguments: "npm:^3.1.0"
+    redis-errors: "npm:^1.2.0"
+    redis-parser: "npm:^3.0.0"
+    standard-as-callback: "npm:^2.1.0"
+  checksum: 10c0/e59d2cceb43ed74b487d7b50fa91b93246e734e5d4835c7e62f64e44da072f12ab43b044248012e6f8b76c61a7c091a2388caad50e8ad69a8ce5515a730b23b8
   languageName: node
   linkType: hard
 
@@ -14039,10 +14072,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.defaults@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lodash.defaults@npm:4.2.0"
+  checksum: 10c0/d5b77aeb702caa69b17be1358faece33a84497bcca814897383c58b28a2f8dfc381b1d9edbec239f8b425126a3bbe4916223da2a576bb0411c2cefd67df80707
+  languageName: node
+  linkType: hard
+
 "lodash.includes@npm:^4.3.0":
   version: 4.3.0
   resolution: "lodash.includes@npm:4.3.0"
   checksum: 10c0/7ca498b9b75bf602d04e48c0adb842dfc7d90f77bcb2a91a2b2be34a723ad24bc1c8b3683ec6b2552a90f216c723cdea530ddb11a3320e08fa38265703978f4b
+  languageName: node
+  linkType: hard
+
+"lodash.isarguments@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "lodash.isarguments@npm:3.1.0"
+  checksum: 10c0/5e8f95ba10975900a3920fb039a3f89a5a79359a1b5565e4e5b4310ed6ebe64011e31d402e34f577eca983a1fc01ff86c926e3cbe602e1ddfc858fdd353e62d8
   languageName: node
   linkType: hard
 
@@ -16913,6 +16960,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"redis-errors@npm:^1.0.0, redis-errors@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "redis-errors@npm:1.2.0"
+  checksum: 10c0/5b316736e9f532d91a35bff631335137a4f974927bb2fb42bf8c2f18879173a211787db8ac4c3fde8f75ed6233eb0888e55d52510b5620e30d69d7d719c8b8a7
+  languageName: node
+  linkType: hard
+
+"redis-parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "redis-parser@npm:3.0.0"
+  dependencies:
+    redis-errors: "npm:^1.0.0"
+  checksum: 10c0/ee16ac4c7b2a60b1f42a2cdaee22b005bd4453eb2d0588b8a4939718997ae269da717434da5d570fe0b05030466eeb3f902a58cf2e8e1ca058bf6c9c596f632f
+  languageName: node
+  linkType: hard
+
 "reflect-metadata@npm:0.2.2, reflect-metadata@npm:^0.2.0":
   version: 0.2.2
   resolution: "reflect-metadata@npm:0.2.2"
@@ -18145,6 +18208,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"standard-as-callback@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "standard-as-callback@npm:2.1.0"
+  checksum: 10c0/012677236e3d3fdc5689d29e64ea8a599331c4babe86956bf92fc5e127d53f85411c5536ee0079c52c43beb0026b5ce7aa1d834dd35dd026e82a15d1bcaead1f
+  languageName: node
+  linkType: hard
+
 "statuses@npm:2.0.1":
   version: 2.0.1
   resolution: "statuses@npm:2.0.1"
@@ -19055,6 +19125,13 @@ __metadata:
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
+"tslib@npm:2.7.0":
+  version: 2.7.0
+  resolution: "tslib@npm:2.7.0"
+  checksum: 10c0/469e1d5bf1af585742128827000711efa61010b699cb040ab1800bcd3ccdd37f63ec30642c9e07c4439c1db6e46345582614275daca3e0f4abae29b0083f04a6
   languageName: node
   linkType: hard
 
