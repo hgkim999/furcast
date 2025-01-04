@@ -4,7 +4,7 @@ import pino from 'pino';
 export const IS_DEV = process.env.NODE_ENV !== 'production';
 
 if (IS_DEV) {
-  config({ path: '.env.development' });
+  config({ path: ['.env.development', '.env.local'] });
 }
 
 config();
@@ -43,6 +43,10 @@ export const DB_DATABASE = checkVariable(
 export const APP_HOST = checkVariable('APP_HOST', process.env.APP_HOST);
 export const APP_ENDPOINT = process.env.APP_ENDPOINT || `https://${APP_HOST}`;
 
+export const OPENWEATHER_API_ENDPOINT = checkVariable(
+  'OPENWEATHER_API_ENDPOINT',
+  process.env.OPENWEATHER_API_ENDPOINT,
+);
 export const OPENWEATHER_API_KEY = checkVariable(
   'OPENWEATHER_API_KEY',
   process.env.OPENWEATHER_API_KEY,

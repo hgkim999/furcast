@@ -39,6 +39,7 @@ export type MutationAddDogArgs = {
 export type Query = {
   __typename?: 'Query';
   dog: Dog;
+  location: Scalars['String']['output'];
   weather: Scalars['String']['output'];
 };
 
@@ -47,16 +48,25 @@ export type QueryDogArgs = {
   id: Scalars['ID']['input'];
 };
 
-export type MainTab_WeatherQueryVariables = Exact<{ [key: string]: never; }>;
+
+export type QueryLocationArgs = {
+  lat: Scalars['Float']['input'];
+  lon: Scalars['Float']['input'];
+};
 
 
-export type MainTab_WeatherQuery = { __typename?: 'Query', weather: string };
+export type QueryWeatherArgs = {
+  lat: Scalars['Float']['input'];
+  lon: Scalars['Float']['input'];
+};
 
-export type WeatherButton_WeatherQueryVariables = Exact<{ [key: string]: never; }>;
+export type MainTab_WeatherQueryVariables = Exact<{
+  lat: Scalars['Float']['input'];
+  lon: Scalars['Float']['input'];
+}>;
 
 
-export type WeatherButton_WeatherQuery = { __typename?: 'Query', weather: string };
+export type MainTab_WeatherQuery = { __typename?: 'Query', weather: string, location: string };
 
 
-export const MainTab_WeatherDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"mainTab_weather"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"weather"}}]}}]} as unknown as DocumentNode<MainTab_WeatherQuery, MainTab_WeatherQueryVariables>;
-export const WeatherButton_WeatherDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WeatherButton_weather"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"weather"}}]}}]} as unknown as DocumentNode<WeatherButton_WeatherQuery, WeatherButton_WeatherQueryVariables>;
+export const MainTab_WeatherDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"mainTab_weather"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lat"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lon"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"weather"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"lat"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lat"}}},{"kind":"Argument","name":{"kind":"Name","value":"lon"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lon"}}}]},{"kind":"Field","name":{"kind":"Name","value":"location"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"lat"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lat"}}},{"kind":"Argument","name":{"kind":"Name","value":"lon"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lon"}}}]}]}}]} as unknown as DocumentNode<MainTab_WeatherQuery, MainTab_WeatherQueryVariables>;

@@ -2,8 +2,9 @@
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
-  "watch": ["src", ".env", ".env.development"],
+  "watch": ["src", ".env", ".env.development", ".env.local"],
   "compilerOptions": {
+    "builder": "tsc",
     "deleteOutDir": true
   }
 }

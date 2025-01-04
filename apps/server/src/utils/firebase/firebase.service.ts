@@ -19,7 +19,7 @@ export class FirebaseService {
         credential: admin.credential.cert(serviceAccount),
       });
 
-      console.log('Firebase initialized', admin.apps);
+      console.log('Firebase initialized');
     }
   }
 

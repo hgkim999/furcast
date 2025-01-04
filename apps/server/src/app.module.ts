@@ -1,31 +1,20 @@
 import { join } from 'path';
 
 import { RedisModule } from '@liaoliaots/nestjs-redis';
-import {
-  ApolloDriver,
-  ApolloDriverConfig,
-} from '@nestjs/apollo';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DogModule } from './dogs/dog.module';
-import {
-  REDIS_DB,
-  REDIS_HOST,
-  REDIS_PORT,
-} from './utils/env';
+import { REDIS_DB, REDIS_HOST, REDIS_PORT } from './utils/env';
 import { FirebaseModule } from './utils/firebase/firebase.module';
 import { WeatherModule } from './weather/weather.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: ['.env', '.env.development', '.env.development.local'],
-    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       subscriptions: {
@@ -45,8 +34,27 @@ import { WeatherModule } from './weather/weather.module';
         db: REDIS_DB,
       },
     }),
-
     FirebaseModule,
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: process.env.NODE_ENV !== 'production' ? 'debug' : 'info',
+        transport: {
+          targets: [
+            {
+              level: 'debug',
+              target: 'pino-pretty',
+              options: {
+                singleLine: true,
+              },
+            },
+            {
+              level: 'error',
+              target: 'pino-pretty',
+            },
+          ],
+        },
+      },
+    }),
 
     DogModule,
     WeatherModule,

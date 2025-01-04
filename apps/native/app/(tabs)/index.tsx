@@ -8,34 +8,64 @@ import { Image } from '@/components/ui/image';
 import { LinearGradient } from '@/components/ui/linear-gradient';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
-import { WeatherButton } from '@/components/WeatherButton';
 import { graphql } from '@/gql';
 import { gql, useApolloClient, useQuery } from '@apollo/client';
+import { useLocation } from '@/hooks/useLocation';
+import React, { useMemo } from 'react';
+import { HStack } from '@/components/ui/hstack';
 
 const weatherQuery = graphql(`
-  query mainTab_weather {
-    weather
+  query mainTab_weather($lat: Float!, $lon: Float!) {
+    weather(lat: $lat, lon: $lon)
+    location(lat: $lat, lon: $lon)
   }
 `);
 
 export default function HomeScreen() {
-  const { data, loading } = useQuery(weatherQuery);
+  const { location } = useLocation();
   const apolloClient = useApolloClient();
 
-  const handleClick = async () => {
-    const res = await apolloClient.query({
-      query: gql`
-        query {
-          weather
-        }
-      `,
-    });
-    console.log(res.data.weather);
+  const { data, loading, error } = useQuery(weatherQuery, {
+    variables: {
+      lat: location?.coords?.latitude ?? 0,
+      lon: location?.coords?.longitude ?? 0,
+    },
+    fetchPolicy: 'cache-and-network',
+    skip: !location?.coords,
+  });
 
-    console.log(process.env.EXPO_PUBLIC_APOLLO_ENDPOINT);
+  const handleClick = async () => {
+    if (location?.coords) {
+      const res = await apolloClient.query({
+        query: gql`
+          query ($lat: Float!, $lon: Float!) {
+            weather(lat: $lat, lon: $lon)
+          }
+        `,
+        variables: {
+          lat: location.coords.latitude,
+          lon: location.coords.longitude,
+        },
+        fetchPolicy: 'no-cache',
+      });
+      console.log(JSON.parse(res.data.weather));
+    }
   };
 
-  console.log({ data });
+  const weatherInfo = useMemo(() => {
+    if (data?.weather) {
+      return JSON.parse(data.weather);
+    }
+    return null;
+  }, [data]);
+
+  const locationName = useMemo(() => {
+    if (data?.location) {
+      return data.location;
+    }
+    return null;
+  }, [data]);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -47,57 +77,38 @@ export default function HomeScreen() {
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-        <WeatherButton />
-      </ThemedView>
       <Pressable
-        className="w-full cursor-pointer items-center rounded-full py-2"
+        className="w-full cursor-pointer items-center rounded-full"
         onPress={handleClick}
       >
         <LinearGradient
+          className="h-full w-full items-center rounded-full py-2"
           colors={['#8637CF', '#0F55A1']}
           start={[0, 1]}
           end={[1, 0]}
         >
-          <Text className="font-semibold text-white">Subscribe</Text>
+          <Text className="font-semibold text-white">Get weather</Text>
         </LinearGradient>
       </Pressable>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{' '}
-          to see changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{' '}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{' '}
-          directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      {loading && <ThemedText>Loading...</ThemedText>}
+      {weatherInfo && (
+        <>
+          <ThemedView style={styles.stepContainer}>
+            <ThemedText type="title">{locationName}</ThemedText>
+            <ThemedText type="subtitle">Current weather</ThemedText>
+            <HStack className="items-center">
+              <Image source={weatherInfo.weather.icon.url} />
+              <ThemedText>{weatherInfo.weather?.main}</ThemedText>
+            </HStack>
+          </ThemedView>
+          <ThemedView style={styles.stepContainer}>
+            <ThemedText type="subtitle">Temperature</ThemedText>
+            <ThemedText>
+              {Math.round(weatherInfo.weather.temp.cur - 273.15)}°C
+            </ThemedText>
+          </ThemedView>
+        </>
+      )}
     </ParallaxScrollView>
   );
 }
