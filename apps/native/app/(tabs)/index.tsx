@@ -21,6 +21,9 @@ const weatherQuery = graphql(`
   }
 `);
 
+const RAINY_IMAGE = require('@/assets/images/backgrounds/rainy.png');
+const LOADING_IMAGE = require('@/assets/images/backgrounds/loading.png');
+
 export default function HomeScreen() {
   const { location } = useLocation();
   const apolloClient = useApolloClient();
@@ -72,24 +75,11 @@ export default function HomeScreen() {
       headerImage={
         <Image
           alt="Furcast Loading"
-          source={require('@/assets/images/backgrounds/loading.png')}
+          source={loading ? LOADING_IMAGE : RAINY_IMAGE}
           className="h-full w-full"
         />
       }
     >
-      <Pressable
-        className="w-full cursor-pointer items-center rounded-full"
-        onPress={handleClick}
-      >
-        <LinearGradient
-          className="h-full w-full items-center rounded-full py-2"
-          colors={['#8637CF', '#0F55A1']}
-          start={[0, 1]}
-          end={[1, 0]}
-        >
-          <Text className="font-semibold text-white">Get weather</Text>
-        </LinearGradient>
-      </Pressable>
       {loading && <ThemedText>Loading...</ThemedText>}
       {weatherInfo && (
         <>
@@ -109,6 +99,19 @@ export default function HomeScreen() {
           </ThemedView>
         </>
       )}
+      <LinearGradient
+        className="items-center rounded-full py-2"
+        colors={['#8637CF', '#0F55A1']}
+        start={[0, 1]}
+        end={[1, 0]}
+      >
+        <Pressable
+          className="w-full cursor-pointer items-center rounded-full"
+          onPress={handleClick}
+        >
+          <Text className="font-semibold text-white">Get weather</Text>
+        </Pressable>
+      </LinearGradient>
     </ParallaxScrollView>
   );
 }
