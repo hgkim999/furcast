@@ -7,11 +7,17 @@ Dog walking & Pet Care reminder w/ Realtime Weather Alarm for Dog Walking
 
 ## Technologies used
 
-- Monorepo w/ [Turbo](https://turbo.build/)
+### Front-end
 - React Native w/ [Expo](https://expo.dev/)
-- Nest.js
 - GraphQL w/ [Apollo GraphQL](https://apollographql.com/)
 - TailwindCSS on React Native using [NativeWind](https://nativewind.dev/)
-- [GCP](https://cloud.google.com/)
+
+### Back-end
+- Nest.js
 - Redis
 - Postgres (ORM vs GCP Data Connect?)
+
+### Infra & Dev Environment
+- Monorepo w/ [Turbo](https://turbo.build/)
+- [GCP](https://cloud.google.com/)
+- Docker and Caddy for local HTTPS development
