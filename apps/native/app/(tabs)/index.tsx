@@ -1,40 +1,34 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { Image } from '@/components/ui/image';
 import { LinearGradient } from '@/components/ui/linear-gradient';
 import { Pressable } from '@/components/ui/pressable';
 import { Text } from '@/components/ui/text';
-import { graphql } from '@/gql';
-import { gql, useApolloClient, useQuery } from '@apollo/client';
+import { gql, useApolloClient } from '@apollo/client';
 import { useLocation } from '@/hooks/useLocation';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { HStack } from '@/components/ui/hstack';
-
-const weatherQuery = graphql(`
-  query mainTab_weather($lat: Float!, $lon: Float!) {
-    weather(lat: $lat, lon: $lon)
-    location(lat: $lat, lon: $lon)
-  }
-`);
-
-const RAINY_IMAGE = require('@/assets/images/backgrounds/rainy.png');
-const LOADING_IMAGE = require('@/assets/images/backgrounds/loading.png');
+import {
+  DogImageSource,
+  getRandomDogImage,
+  getRandomWeatherImage,
+  WeatherImageSource,
+} from '@/utils/assetManager';
+import { useCurrentWeatherInfo } from '@/hooks/useCurrentWeatherInfo';
+import { Box } from '@/components/ui/box';
 
 export default function HomeScreen() {
   const { location } = useLocation();
   const apolloClient = useApolloClient();
+  const [dogImageSource, setDogImageSource] = useState(getRandomDogImage());
+  const [weatherImageSource, setWeatherImageSource] = useState(
+    getRandomWeatherImage(),
+  );
 
-  const { data, loading, error } = useQuery(weatherQuery, {
-    variables: {
-      lat: location?.coords?.latitude ?? 0,
-      lon: location?.coords?.longitude ?? 0,
-    },
-    fetchPolicy: 'cache-and-network',
-    skip: !location?.coords,
+  const { weatherInfo, locationName, queryResult } = useCurrentWeatherInfo({
+    location,
   });
 
   const handleClick = async () => {
@@ -55,50 +49,70 @@ export default function HomeScreen() {
     }
   };
 
-  const weatherInfo = useMemo(() => {
-    if (data?.weather) {
-      return JSON.parse(data.weather);
-    }
-    return null;
-  }, [data]);
+  const handleClickWeather = () => {
+    setWeatherImageSource(getRandomWeatherImage());
+  };
 
-  const locationName = useMemo(() => {
-    if (data?.location) {
-      return data.location;
-    }
-    return null;
-  }, [data]);
+  const handleClickDog = () => {
+    setDogImageSource(getRandomDogImage());
+  };
 
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
-        <Image
-          alt="Furcast Loading"
-          source={loading ? LOADING_IMAGE : RAINY_IMAGE}
-          className="h-full w-full"
-        />
+        <Pressable className="h-full" onPress={handleClickWeather}>
+          <Image
+            alt="Furcast Loading"
+            source={weatherImageSource}
+            className="h-full w-full"
+          />
+        </Pressable>
       }
+      headerComponent={
+        weatherInfo && (
+          <Box className="text-shadow-lg text-shadow-blur-md absolute mb-2 h-full w-full items-center justify-center gap-2 bg-transparent text-center">
+            <Box className="mb-2 gap-2">
+              <Text
+                size="2xl"
+                className="bold text-shadow-x-0 text-shadow text-shadow-blur-xl text-center text-white"
+                style={styles.shadowedText}
+              >
+                {locationName}
+              </Text>
+              <HStack className="items-center justify-center">
+                <Text
+                  className="text-white"
+                  shadow="lg"
+                  size="5xl"
+                  style={styles.shadowedText}
+                >
+                  {weatherInfo.weather?.main}
+                </Text>
+              </HStack>
+            </Box>
+            <Box className="text-shadow-blur-8 text-shadow mb-2 gap-2">
+              <Text
+                className="text-shadow text-xl text-white"
+                style={styles.shadowedText}
+              >
+                {Math.round(weatherInfo.weather.temp.cur - 273.15)}°C
+              </Text>
+            </Box>
+            <Box className="absolute bottom-4">
+              <Pressable onPress={handleClickDog}>
+                <Image
+                  alt="Furcast Dog"
+                  source={dogImageSource}
+                  className="h-72 w-36"
+                />
+              </Pressable>
+            </Box>
+          </Box>
+        )
+      }
+      headerHeight={800}
     >
-      {loading && <ThemedText>Loading...</ThemedText>}
-      {weatherInfo && (
-        <>
-          <ThemedView style={styles.stepContainer}>
-            <ThemedText type="title">{locationName}</ThemedText>
-            <ThemedText type="subtitle">Current weather</ThemedText>
-            <HStack className="items-center">
-              <Image source={weatherInfo.weather.icon.url} />
-              <ThemedText>{weatherInfo.weather?.main}</ThemedText>
-            </HStack>
-          </ThemedView>
-          <ThemedView style={styles.stepContainer}>
-            <ThemedText type="subtitle">Temperature</ThemedText>
-            <ThemedText>
-              {Math.round(weatherInfo.weather.temp.cur - 273.15)}°C
-            </ThemedText>
-          </ThemedView>
-        </>
-      )}
       <LinearGradient
         className="items-center rounded-full py-2"
         colors={['#8637CF', '#0F55A1']}
@@ -117,6 +131,11 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  shadowedText: {
+    textShadowRadius: 8,
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 0, height: 0 },
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',

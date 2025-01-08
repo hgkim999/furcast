@@ -1605,6 +1605,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@designbycode/tailwindcss-text-shadow@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@designbycode/tailwindcss-text-shadow@npm:2.2.1"
+  peerDependencies:
+    tailwindcss: ">=3.0.0 || >=3.0.0-alpha.1"
+  checksum: 10c0/dcd5d28332ba1e47876ef653cb1e7128e58364f10a9d4348900e054464ab1204f719f60d031620d54f51fb7d35649219fe7b418ebceaa3effcca9a464f71787f
+  languageName: node
+  linkType: hard
+
 "@dev-plugins/apollo-client@npm:^0.1.0":
   version: 0.1.0
   resolution: "@dev-plugins/apollo-client@npm:0.1.0"
@@ -2870,6 +2879,7 @@ __metadata:
   dependencies:
     "@apollo/client": "npm:^3.12.4"
     "@babel/core": "npm:^7.25.2"
+    "@designbycode/tailwindcss-text-shadow": "npm:^2.2.1"
     "@dev-plugins/apollo-client": "npm:^0.1.0"
     "@expo/html-elements": "npm:^0.11.0"
     "@expo/vector-icons": "npm:^14.0.2"

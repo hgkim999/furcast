@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
+    "@designbycode/tailwindcss-text-shadow": "^2.2.1",
     "@dev-plugins/apollo-client": "^0.1.0",
     "@expo/html-elements": "^0.11.0",
     "@expo/vector-icons": "^14.0.2",

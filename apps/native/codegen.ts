@@ -2,7 +2,12 @@ import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: '../../packages/core/graphql/schema.gql',
-  documents: ['app/**/*.ts?(x)', '!src/gql/**/*', 'components/**/*.ts?(x)'],
+  documents: [
+    'app/**/*.ts?(x)',
+    '!src/gql/**/*',
+    'components/**/*.ts?(x)',
+    'hooks/**/*.ts',
+  ],
   emitLegacyCommonJSImports: true,
   generates: {
     './gql/': {

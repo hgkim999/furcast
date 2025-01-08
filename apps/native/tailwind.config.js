@@ -1,4 +1,5 @@
 import gluestackPlugin from '@gluestack-ui/nativewind-utils/tailwind-plugin';
+import textShadowPlugin from '@designbycode/tailwindcss-text-shadow';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -193,5 +194,5 @@ module.exports = {
       },
     },
   },
-  plugins: [gluestackPlugin],
+  plugins: [gluestackPlugin, textShadowPlugin],
 };

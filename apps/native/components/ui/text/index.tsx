@@ -19,10 +19,12 @@ const Text = React.forwardRef<React.ElementRef<typeof RNText>, ITextProps>(
       sub,
       italic,
       highlight,
+      shadow,
       ...props
     },
-    ref
+    ref,
   ) => {
+    console.log('text', textStyle({ shadow }));
     return (
       <RNText
         className={textStyle({
@@ -34,13 +36,14 @@ const Text = React.forwardRef<React.ElementRef<typeof RNText>, ITextProps>(
           sub,
           italic,
           highlight,
+          shadow,
           class: className,
         })}
         {...props}
         ref={ref}
       />
     );
-  }
+  },
 );
 
 Text.displayName = 'Text';

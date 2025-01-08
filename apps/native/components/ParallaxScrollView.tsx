@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactElement } from 'react';
+import type { PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
@@ -10,13 +10,15 @@ import Animated, {
 import { ThemedView } from '@/components/ThemedView';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import React from 'react';
 
-const HEADER_HEIGHT = 500;
+const HEADER_HEIGHT = 700;
 
 type Props = PropsWithChildren<{
   headerHeight?: number;
   headerImage: ReactElement;
   headerBackgroundColor: { dark: string; light: string };
+  headerComponent?: ReactNode;
 }>;
 
 export default function ParallaxScrollView({
@@ -24,6 +26,7 @@ export default function ParallaxScrollView({
   headerHeight = HEADER_HEIGHT,
   headerImage,
   headerBackgroundColor,
+  headerComponent,
 }: Props) {
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -50,8 +53,10 @@ export default function ParallaxScrollView({
     };
   });
 
+  console.log(headerComponent);
+
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView className="flex-1">
       <Animated.ScrollView
         ref={scrollRef}
         scrollEventThrottle={16}
@@ -59,13 +64,17 @@ export default function ParallaxScrollView({
         contentContainerStyle={{ paddingBottom: bottom }}
       >
         <Animated.View
+          className={`overflow-hidden`}
           style={[
-            styles.header,
+            { height: headerHeight },
             { backgroundColor: headerBackgroundColor[colorScheme] },
             headerAnimatedStyle,
           ]}
         >
-          {headerImage}
+          <>
+            {headerImage}
+            {headerComponent}
+          </>
         </Animated.View>
         <ThemedView style={styles.content}>{children}</ThemedView>
       </Animated.ScrollView>
@@ -74,13 +83,6 @@ export default function ParallaxScrollView({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    height: HEADER_HEIGHT,
-    overflow: 'hidden',
-  },
   content: {
     flex: 1,
     padding: 32,
