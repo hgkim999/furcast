@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
-    "\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon)\n    location(lat: $lat, lon: $lon)\n  }\n": types.UseCurrentWeatherInfo_WeatherDocument,
+    "\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon) {\n      astronomical {\n        sunrise\n        sunset\n      }\n      dt\n      lat\n      lon\n      timezoneOffset\n      weather {\n        conditionId\n        description\n        feelsLike {\n          cur\n        }\n        icon {\n          url\n          raw\n        }\n        main\n        pressure\n        rain\n        snow\n        temp {\n          cur\n          min\n          max\n        }\n        visibility\n        wind {\n          deg\n          speed\n        }\n      }\n    }\n    location(lat: $lat, lon: $lon)\n  }\n": types.UseCurrentWeatherInfo_WeatherDocument,
 };
 
 /**
@@ -34,7 +34,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon)\n    location(lat: $lat, lon: $lon)\n  }\n"): (typeof documents)["\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon)\n    location(lat: $lat, lon: $lon)\n  }\n"];
+export function graphql(source: "\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon) {\n      astronomical {\n        sunrise\n        sunset\n      }\n      dt\n      lat\n      lon\n      timezoneOffset\n      weather {\n        conditionId\n        description\n        feelsLike {\n          cur\n        }\n        icon {\n          url\n          raw\n        }\n        main\n        pressure\n        rain\n        snow\n        temp {\n          cur\n          min\n          max\n        }\n        visibility\n        wind {\n          deg\n          speed\n        }\n      }\n    }\n    location(lat: $lat, lon: $lon)\n  }\n"): (typeof documents)["\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon) {\n      astronomical {\n        sunrise\n        sunset\n      }\n      dt\n      lat\n      lon\n      timezoneOffset\n      weather {\n        conditionId\n        description\n        feelsLike {\n          cur\n        }\n        icon {\n          url\n          raw\n        }\n        main\n        pressure\n        rain\n        snow\n        temp {\n          cur\n          min\n          max\n        }\n        visibility\n        wind {\n          deg\n          speed\n        }\n      }\n    }\n    location(lat: $lat, lon: $lon)\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

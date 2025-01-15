@@ -5,7 +5,6 @@ export enum WEATHER_TYPES {
   DRIZZLE = 'Drizzle',
   RAIN = 'Rain',
   SNOW = 'Snow',
-  ATMOSPHERE = 'Atmosphere',
   CLEAR = 'Clear',
   CLOUDS = 'Clouds',
   MIST = 'Mist',
@@ -75,4 +74,26 @@ export const WEATHER_OPENWEATHER_MAP: Record<
   802: WEATHER_TYPES.CLOUDS,
   803: WEATHER_TYPES.CLOUDS,
   804: WEATHER_TYPES.CLOUDS,
+};
+
+export function getRandomWeatherCode(): keyof typeof OPENWEATHER_WEATHER_CONDITIONS {
+  const keys = Object.keys(OPENWEATHER_WEATHER_CONDITIONS).map((key) =>
+    parseInt(key),
+  );
+  return (
+    keys[Math.floor(Math.random() * keys.length)] ??
+    (800 as keyof typeof OPENWEATHER_WEATHER_CONDITIONS)
+  );
+}
+
+export function getRandomWeatherType(): WEATHER_TYPES {
+  const values = Object.values(WEATHER_TYPES);
+  return values[Math.floor(Math.random() * values.length)] as WEATHER_TYPES;
+}
+
+export type TestWeatherInfo = {
+  weather: {
+    conditionId: keyof typeof OPENWEATHER_WEATHER_CONDITIONS;
+    main: WEATHER_TYPES;
+  };
 };

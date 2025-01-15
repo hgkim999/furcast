@@ -43,13 +43,5 @@ export const textStyle = tva({
     highlight: {
       true: 'bg-yellow-500',
     },
-    shadow: {
-      xs: 'text-shadow-xs',
-      sm: 'text-shadow-sm',
-      md: 'text-shadow-md',
-      lg: 'text-shadow-lg',
-      xl: 'text-shadow-xl',
-      '2xl': 'text-shadow-2xl',
-    },
   },
 });

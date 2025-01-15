@@ -2,6 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""A valid ISO-8601 DateTime scalar"""
+scalar DateTime
+
 type Dog {
   age: Float!
   breed: String
@@ -16,5 +19,58 @@ type Mutation {
 type Query {
   dog(id: ID!): Dog!
   location(lat: Float!, lon: Float!): String!
-  weather(lat: Float!, lon: Float!): String!
+  weather(lat: Float!, lon: Float!): WeatherInfo!
+}
+
+type WeatherDetailInfo {
+  clouds: Int!
+  conditionId: Int!
+  description: String!
+  feelsLike: WeatherDetailInfoFeelsLike!
+  humidity: Int!
+  icon: WeatherDetailInfoIcon!
+  main: String!
+  pressure: Int!
+  rain: Int!
+  snow: Int!
+  temp: WeatherDetailInfoTemp!
+  visibility: Int!
+  wind: WeatherDetailInfoWind!
+}
+
+type WeatherDetailInfoFeelsLike {
+  cur: Float!
+}
+
+type WeatherDetailInfoIcon {
+  raw: String!
+  url: String!
+}
+
+type WeatherDetailInfoTemp {
+  cur: Float!
+  max: Float!
+  min: Float!
+}
+
+type WeatherDetailInfoWind {
+  deg: Int!
+  speed: Float!
+}
+
+type WeatherInfo {
+  astronomical: WeatherInfoAstronomical
+  dt: DateTime!
+  dtRaw: Int
+  lat: Float!
+  lon: Float!
+  timezoneOffset: Int!
+  weather: WeatherDetailInfo!
+}
+
+type WeatherInfoAstronomical {
+  sunrise: DateTime!
+  sunriseRaw: Int!
+  sunset: DateTime!
+  sunsetRaw: Int!
 }

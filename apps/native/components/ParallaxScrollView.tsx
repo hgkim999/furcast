@@ -19,7 +19,8 @@ type Props = PropsWithChildren<{
   headerImage: ReactElement;
   headerBackgroundColor: { dark: string; light: string };
   headerComponent?: ReactNode;
-}>;
+}> &
+  React.ComponentProps<typeof Animated.ScrollView>;
 
 export default function ParallaxScrollView({
   children,
@@ -27,6 +28,7 @@ export default function ParallaxScrollView({
   headerImage,
   headerBackgroundColor,
   headerComponent,
+  ...rest
 }: Props) {
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -53,8 +55,6 @@ export default function ParallaxScrollView({
     };
   });
 
-  console.log(headerComponent);
-
   return (
     <ThemedView className="flex-1">
       <Animated.ScrollView
@@ -62,6 +62,7 @@ export default function ParallaxScrollView({
         scrollEventThrottle={16}
         scrollIndicatorInsets={{ bottom }}
         contentContainerStyle={{ paddingBottom: bottom }}
+        {...rest}
       >
         <Animated.View
           className={`overflow-hidden`}

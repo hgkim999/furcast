@@ -19,11 +19,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
-    "@designbycode/tailwindcss-text-shadow": "^2.2.1",
     "@dev-plugins/apollo-client": "^0.1.0",
     "@expo/html-elements": "^0.11.0",
     "@expo/vector-icons": "^14.0.2",
-    "@furcast/core": "*",
+    "@furcast/core": "workspace:*",
+    "@gluestack-ui/actionsheet": "^0.2.46",
     "@gluestack-ui/alert": "^0.1.16",
     "@gluestack-ui/alert-dialog": "^0.1.32",
     "@gluestack-ui/avatar": "^0.1.18",

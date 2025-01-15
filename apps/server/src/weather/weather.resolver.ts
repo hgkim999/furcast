@@ -4,6 +4,7 @@ import { Weather } from './Weather';
 import { WeatherService } from './weather.service';
 import { GetWeatherArgs } from './weather.args';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { WeatherInfo } from './WeatherInfo';
 
 @Resolver(Weather)
 export class WeatherResolver {
@@ -14,11 +15,11 @@ export class WeatherResolver {
     private readonly weatherService: WeatherService,
   ) {}
 
-  @Query(() => String)
+  @Query(() => WeatherInfo)
   async weather(@Args() { lat, lon }: GetWeatherArgs) {
     const weather = await this.weatherService.fetchWeather(lat, lon);
     this.logger.info(weather);
-    return JSON.stringify(weather);
+    return weather;
   }
 
   @Query(() => String)

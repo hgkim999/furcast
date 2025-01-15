@@ -1,12 +1,11 @@
 import gluestackPlugin from '@gluestack-ui/nativewind-utils/tailwind-plugin';
-import textShadowPlugin from '@designbycode/tailwindcss-text-shadow';
+import plugin from 'tailwindcss';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : 'class',
   content: [
     './app/**/*.{html,js,jsx,ts,tsx}',
-    './core-components/**/**/*.{html,js,jsx,ts,tsx}',
     './components/**/*.{html,js,jsx,ts,tsx,mdx}',
     './hooks/**/*.{html,js,jsx,ts,tsx,mdx}',
   ],
@@ -192,7 +191,25 @@ module.exports = {
         'soft-3': '0px 0px 30px rgba(38, 38, 38, 0.1)',
         'soft-4': '0px 0px 40px rgba(38, 38, 38, 0.1)',
       },
+      textShadow: {
+        DEFAULT: '0 0 8px rgba(0, 0, 0, 0.8)',
+        none: 'none',
+      },
     },
   },
-  plugins: [gluestackPlugin, textShadowPlugin],
+  plugins: [
+    gluestackPlugin,
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.text-shadow': {
+          textShadowColor: 'rgba(0, 0, 0, 0.21)',
+          textShadowOffset: {
+            width: 0,
+            height: 0,
+          },
+          textShadowRadius: 8,
+        },
+      });
+    }),
+  ],
 };
