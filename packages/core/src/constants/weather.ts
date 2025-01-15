@@ -1,5 +1,11 @@
 import { OPENWEATHER_WEATHER_CONDITIONS } from './openweather';
 
+export enum WEATHER_UNITS {
+  IMPERIAL = 'imperial',
+  METRIC = 'metric',
+  STANDARD = 'standard',
+}
+
 export enum WEATHER_TYPES {
   THUNDERSTORM = 'Thunderstorm',
   DRIZZLE = 'Drizzle',

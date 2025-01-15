@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon) {\n      astronomical {\n        sunrise\n        sunset\n      }\n      dt\n      lat\n      lon\n      timezoneOffset\n      weather {\n        conditionId\n        description\n        feelsLike {\n          cur\n        }\n        icon {\n          url\n          raw\n        }\n        main\n        pressure\n        rain\n        snow\n        temp {\n          cur\n          min\n          max\n        }\n        visibility\n        wind {\n          deg\n          speed\n        }\n      }\n    }\n    location(lat: $lat, lon: $lon)\n  }\n": types.UseCurrentWeatherInfo_WeatherDocument,
+    "\n  query useWeatherOverview_weather($lat: Float!, $lon: Float!) {\n    overview(lat: $lat, lon: $lon) {\n      lat\n      lon\n      tz\n      date\n      units\n      weather_overview\n    }\n  }\n": types.UseWeatherOverview_WeatherDocument,
 };
 
 /**
@@ -35,6 +36,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon) {\n      astronomical {\n        sunrise\n        sunset\n      }\n      dt\n      lat\n      lon\n      timezoneOffset\n      weather {\n        conditionId\n        description\n        feelsLike {\n          cur\n        }\n        icon {\n          url\n          raw\n        }\n        main\n        pressure\n        rain\n        snow\n        temp {\n          cur\n          min\n          max\n        }\n        visibility\n        wind {\n          deg\n          speed\n        }\n      }\n    }\n    location(lat: $lat, lon: $lon)\n  }\n"): (typeof documents)["\n  query useCurrentWeatherInfo_weather($lat: Float!, $lon: Float!) {\n    weather(lat: $lat, lon: $lon) {\n      astronomical {\n        sunrise\n        sunset\n      }\n      dt\n      lat\n      lon\n      timezoneOffset\n      weather {\n        conditionId\n        description\n        feelsLike {\n          cur\n        }\n        icon {\n          url\n          raw\n        }\n        main\n        pressure\n        rain\n        snow\n        temp {\n          cur\n          min\n          max\n        }\n        visibility\n        wind {\n          deg\n          speed\n        }\n      }\n    }\n    location(lat: $lat, lon: $lon)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query useWeatherOverview_weather($lat: Float!, $lon: Float!) {\n    overview(lat: $lat, lon: $lon) {\n      lat\n      lon\n      tz\n      date\n      units\n      weather_overview\n    }\n  }\n"): (typeof documents)["\n  query useWeatherOverview_weather($lat: Float!, $lon: Float!) {\n    overview(lat: $lat, lon: $lon) {\n      lat\n      lon\n      tz\n      date\n      units\n      weather_overview\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -18,8 +18,9 @@ type Mutation {
 
 type Query {
   dog(id: ID!): Dog!
-  location(lat: Float!, lon: Float!): String!
-  weather(lat: Float!, lon: Float!): WeatherInfo!
+  location(lat: Float!, lon: Float!, units: String = "metric"): String!
+  overview(lat: Float!, lon: Float!, units: String = "metric"): WeatherOverview!
+  weather(lat: Float!, lon: Float!, units: String = "metric"): WeatherInfo!
 }
 
 type WeatherDetailInfo {
@@ -64,13 +65,23 @@ type WeatherInfo {
   dtRaw: Int
   lat: Float!
   lon: Float!
+  timezone: String!
   timezoneOffset: Int!
   weather: WeatherDetailInfo!
 }
 
 type WeatherInfoAstronomical {
-  sunrise: DateTime!
-  sunriseRaw: Int!
-  sunset: DateTime!
-  sunsetRaw: Int!
+  sunrise: DateTime
+  sunriseRaw: Int
+  sunset: DateTime
+  sunsetRaw: Int
+}
+
+type WeatherOverview {
+  date: String!
+  lat: Float!
+  lon: Float!
+  tz: String!
+  units: String!
+  weather_overview: String!
 }

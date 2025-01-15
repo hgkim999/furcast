@@ -12,18 +12,16 @@ import {
   DogImageName,
   DogImageSource,
   getAssetsForWeatherCode,
-  getAssetsForWeatherType,
 } from '@/utils/assetManager';
 import { useCurrentWeatherInfo } from '@/hooks/useCurrentWeatherInfo';
 import { Box } from '@/components/ui/box';
 import {
   getRandomWeatherCode,
-  getRandomWeatherType,
   TestWeatherInfo,
   WEATHER_OPENWEATHER_MAP,
-  WEATHER_TYPES,
 } from '@furcast/core';
-import { WeatherInfo } from '@/gql/graphql';
+import { useWeatherOverview } from '@/hooks/useWeatherOverview';
+import { ThemedText } from '@/components/ThemedText';
 
 export default function HomeScreen() {
   const { location } = useLocation();
@@ -31,6 +29,10 @@ export default function HomeScreen() {
     useState<TestWeatherInfo | null>(null);
 
   const { weatherInfo, locationName, queryResult } = useCurrentWeatherInfo({
+    location,
+  });
+
+  const { overview } = useWeatherOverview({
     location,
   });
 
@@ -107,7 +109,7 @@ export default function HomeScreen() {
               </Box>
               <Box className="">
                 <Text className="text-shadow px-2 py-1 text-white">
-                  {Math.round(weatherInfo.weather.temp.cur - 273.15)}°C
+                  {Math.round(weatherInfo.weather.temp.cur)}°C
                 </Text>
               </Box>
               <Box className="absolute bottom-4">
@@ -134,6 +136,9 @@ export default function HomeScreen() {
         />
       }
     >
+      <ThemedText>
+        {overview?.weather_overview ?? 'Loading weather overview...'}
+      </ThemedText>
       <LinearGradient
         className="items-center rounded-full py-2"
         colors={['#8637CF', '#0F55A1']}

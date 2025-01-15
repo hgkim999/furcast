@@ -3,17 +3,17 @@ import { DateTime } from 'src/utils/apollo/DateTimeScalarType';
 
 @ObjectType()
 export class WeatherInfoAstronomical {
-  @Field(() => DateTime)
-  sunrise: Date;
+  @Field(() => DateTime, { nullable: true })
+  sunrise?: Date;
 
-  @Field(() => Int)
-  sunriseRaw: number;
+  @Field(() => Int, { nullable: true })
+  sunriseRaw?: number;
 
-  @Field(() => DateTime)
-  sunset: Date;
+  @Field(() => DateTime, { nullable: true })
+  sunset?: Date;
 
-  @Field(() => Int)
-  sunsetRaw: number;
+  @Field(() => Int, { nullable: true })
+  sunsetRaw?: number;
 }
 
 @ObjectType()
@@ -113,6 +113,9 @@ export class WeatherInfo {
 
   @Field(() => Int)
   timezoneOffset: number;
+
+  @Field(() => String)
+  timezone: string;
 
   @Field(() => WeatherDetailInfo)
   weather: WeatherDetailInfo;
